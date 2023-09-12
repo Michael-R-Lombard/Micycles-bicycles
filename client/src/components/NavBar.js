@@ -11,7 +11,7 @@ function NavBar() {
         </li>
        
         <li>
-          <NavLink to="/random"> Random Bicycle </NavLink>
+          <NavLink to="/users"> Users </NavLink>
         </li>
         <li>
           <NavLink to="/create_bicycle"> Create Bicycle </NavLink>
