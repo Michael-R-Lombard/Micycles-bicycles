@@ -1,7 +1,7 @@
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, request
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-from models import db, Bicycle 
+from models import db, Bicycle, User 
 # from config import app 
 
 app = Flask(__name__)
@@ -27,41 +27,28 @@ class Bicycles(Resource):
         )
         return response
     
-api.add_resource(Bicycles, '/bicycles')
-    # def post(self):
-    #     request_json = request.get_json()
-       
-    #     new_production = Production(
-    #         title=request_json['title'],
-    #         genre=request_json['genre'],
-    #         budget=request_json['budget'],
-    #         image=request_json['image'],
-    #         director=request_json['director'],
-    #         description=request_json['description'],
-    #         ongoing=request_json['ongoing']
-    #     )
-    #     db.session.add(new_production)
-    #     db.session.commit()
+    def post(self):
+        new_bicycle = Bicycle()
+        data = request.get_json()
 
-    #     #new_production.to_dict()
-    #     response = make_response(
-    #         new_production.to_dict(),
-    #         201
-    #     )
-    #     return response
+        try:
+            for attr in data:
+                setattr(new_bicycle, attr, data[attr])
+
+            db.session.add(new_bicycle)
+            db.session.commit()
+
+            return make_response(new_bicycle.to_dict(), 201)
+        except ValueError:
+            return make_response({'errors': ['Validation errors']}, 400)
+
+api.add_resource(Bicycles, '/bicycles')
+   
         
 
 
 
-# class Parts(Resource):
-#     def get(self):
-#         part_list = [part.to_dict() for part in Part.query.all()]  
 
-#         response = make_response(
-#             jsonify(part_list),
-#             200
-#         )
-#         return response
 
 class BicycleByID(Resource):
     def get(self, id):
@@ -72,8 +59,25 @@ class BicycleByID(Resource):
         )
 
         return response
+    
+    def delete(self, id):
+        bicycle = Bicycle.query.filter_by(id=id).first()
+        
+        db.session.delete(bicycle)
+        db.session.commit()
+
+        response = make_response('', 204)
+        
+        return response
 
 api.add_resource(BicycleByID, '/bicycles/<int:id>')
+
+class Users(Resource):
+    def get(self):
+        users = [user.to_dict() for user in User.query.all()]
+        return make_response(users, 200)
+    
+api.add_resource(Users, '/users')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
