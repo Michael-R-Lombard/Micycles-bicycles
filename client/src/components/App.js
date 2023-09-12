@@ -1,8 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Routes } from "react-router-dom";
+import AllBikes from "./AllBikes";
+import NavBar from "./NavBar"
 
 function App() {
-  return <h1>Phase 4 Project Client</h1>;
+  return (
+  
+  <div>
+    <NavBar />
+    <h1>Micycle's Bicycles</h1>
+    <Route exact path='/bicycles'>
+        <AllBikes />
+    </Route>
+     
+      
+
+      
+    </div>
+  )
 }
 
 export default App;
