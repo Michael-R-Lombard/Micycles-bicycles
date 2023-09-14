@@ -10,7 +10,7 @@
 
 from random import randint, choice as rc
 from app import app
-from models import db, Bicycle, Size
+from models import db, Bicycle, Size, User, CreateUser
 
 
 # from faker import Faker
@@ -25,6 +25,20 @@ with app.app_context():
         # fake = Faker()
         with app.app_context():
             print("Starting seed...")
+
+    new_user = CreateUser(
+        username="your_username",
+        password="your_password",
+        email="your_email@example.com"
+    )
+    
+    # Add the user to the database session
+    db.session.add_all(new_user)
+    
+    # Commit the changes to the database
+    db.session.commit()
+    
+    print("User created successfully.")
 
     bicycles = []
 
