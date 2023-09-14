@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-function BikeForm({ onAddBike, setShowForm }) {
+function BikeForm({ onAddBike }) {
+    const history = useHistory()
     const [formData, setFormData] = useState({
         name: "",
         image: "",
@@ -34,7 +36,7 @@ function BikeForm({ onAddBike, setShowForm }) {
             .then((r) => r.json())
             .then((bike) => {
                 onAddBike(bike) 
-                setShowForm(false) 
+                history.push("/bicycles")
             });
     }
 

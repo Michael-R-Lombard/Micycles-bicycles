@@ -7,7 +7,7 @@ function BikeCard({ bike, onDeleteBike, onUpdateBike }) {
         fetch(`/bicycles/${id}`, {
             method: "DELETE",
         })
-            // .then( onDeletebike(id))
+            
             .then(() => {
                 onDeleteBike(id)   
             });
@@ -32,7 +32,7 @@ function BikeCard({ bike, onDeleteBike, onUpdateBike }) {
     return (
         <div className="card">
             <h2>{name}</h2>
-            <img src={image} alt={name} className="" />
+            <img src={image} alt={name} className="" style={{"maxWidth":"20rem"}} />
             <p>{likes} Likes </p>
             <button className="like-btn" onClick={handleLikeClick}>
                 Like {"<3"}

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 
 function Users (){
-    const [users, setusers] = useState([]);
+    const [users, setUsers] = useState([]);
     function getUsers() {
         fetch('/users')
         .then(r=>r.json())

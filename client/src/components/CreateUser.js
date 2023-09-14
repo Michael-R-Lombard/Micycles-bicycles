@@ -14,11 +14,12 @@ function CreateUser() {
   const formik = useFormik({
     initialValues: {
       username: "",
-      password: "",
-      age: "",
+      password: ""
+      // age: ""
     },
     onSubmit: (values) => {
-      fetch("/create_user", {
+      console.log(values)
+      fetch("/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,23 +62,23 @@ function CreateUser() {
         onChange={formik.handleChange}
         value={formik.values.password}
       />
-      <label htmlFor="age">Age: </label>
+      {/* <label htmlFor="age">Age: </label>
       <input
         id="age"
         name="age"
         type="number"
         onChange={formik.handleChange}
         value={formik.values.age}
-      />
+      /> */}
       {formik.errors.username && formik.touched.username && (
         <p style={{ color: "red" }}>{formik.errors.username}</p>
       )}
       {formik.errors.password && formik.touched.password && (
         <p style={{ color: "red" }}>{formik.errors.password}</p>
       )}
-      {formik.errors.age && formik.touched.age && (
+      {/* {formik.errors.age && formik.touched.age && (
         <p style={{ color: "red" }}>{formik.errors.age}</p>
-      )}
+      )} */}
       {formErrors.length > 0 && (
         <p style={{ color: "red" }}>{formErrors.join(", ")}</p>
       )}

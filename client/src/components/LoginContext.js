@@ -1,32 +1,39 @@
-// // LoginContext.js
-// import React, { createContext, useContext, useState } from "react";
 
-// const LoginContext = createContext();
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-// export function useLogin() {
-//     const context = useContext(LoginContext);
-//     if (!context) {
-//         throw new Error("useLogin must be used within a LoginProvider");
-//     }
-//     return context;
-// }
+const LoginContext = createContext();
 
-// export function LoginProvider({ children }) {
-//     const [isLoggedIn, setIsLoggedIn] = useState(false);
+export function useLogin() {
+    const context = useContext(LoginContext);
+    if (!context) {
+        throw new Error("useLogin must be used within a LoginProvider");
+    }
+    return context;
+}
 
-//     const login = () => {
-//         setIsLoggedIn(true);
-//     };
+export function LoginProvider({ children }) {
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        return localStorage.getItem("isLoggedIn") === "true";
+    });
 
-//     const logout = () => {
-//         setIsLoggedIn(false);
-//     };
+    // Use useEffect to save the login status to local storage whenever it changes
+    useEffect(() => {
+        localStorage.setItem("isLoggedIn", isLoggedIn);
+    }, [isLoggedIn]);
 
-//     return (
-//         <LoginContext.Provider value={{ isLoggedIn, login, logout }}>
-//             {children}
-//         </LoginContext.Provider>
-//     );
-// }
+    const login = () => {
+        setIsLoggedIn(true);
+    };
 
-// export default LoginContext;
+    const logout = () => {
+        setIsLoggedIn(false);
+    };
+
+    return (
+        <LoginContext.Provider value={{ isLoggedIn, login, logout }}>
+            {children}
+        </LoginContext.Provider>
+    );
+}
+
+export default LoginContext;

@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from "react";
 import BikeForm from "./BikeForm";
-import BikeContainer from "./bike Container";
+import BikeContainer from "./BikeContainer";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 
 
 
-function AllBikes (){
+function AllBikes ({bikes, setBikes}){
+  const history = useHistory()
   const [showForm, setShowForm] = useState(false);
-  const [bikes, setBikes] = useState([]);
+  // const [bikes, setBikes] = useState([]);
 
-    // const [bicycles, setBicycles] = useState([]);
-    function getBicycles() {
-        fetch('/bicycles')
-        .then(r=>r.json())
-        .then(bicycles => setBikes(bicycles)) 
-      }
+  //   // const [bicycles, setBicycles] = useState([]);
+  //   function getBicycles() {
+  //       fetch('/bicycles')
+  //       .then(r=>r.json())
+  //       .then(bicycles => setBikes(bicycles)) 
+  //     }
 
-      useEffect(() => {
-        getBicycles();
-      }, []);
+  //     useEffect(() => {
+  //       getBicycles();
+  //     }, []);
     //   console.log(bicycles)
 
     function handleClick() {
-      setShowForm((showForm) => !showForm);
+      history.push("/create_bicycle")
     }
   
     function handleAddBike(newBike) {
