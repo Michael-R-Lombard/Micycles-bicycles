@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
+import { useHistory } from "react-router-dom";
 
-function CreateUser() {
+function UserLogin() {
   const [users, setUsers] = useState([]);
   const [formErrors, setFormErrors] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     fetch("/users")
@@ -14,12 +16,10 @@ function CreateUser() {
   const formik = useFormik({
     initialValues: {
       username: "",
-      password: ""
-      // age: ""
+      password: "",
     },
     onSubmit: (values) => {
-      console.log(values)
-      fetch("/users", {
+      fetch("/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,13 +30,14 @@ function CreateUser() {
           if (r.ok) {
             return r.json();
           } else {
-            throw new Error("Failed to create user.");
+            throw new Error("Failed to login.");
           }
         })
         .then((user) => {
           setUsers([...users, user]);
           formik.resetForm();
           setFormErrors([]);
+          history.push('/create_bicycle');
         })
         .catch((error) => {
           setFormErrors([error.message]);
@@ -45,7 +46,7 @@ function CreateUser() {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="form">
+    <form onSubmit={formik.handleSubmit} className="container mt-5">
       <label htmlFor="username">Username: </label>
       <input
         id="username"
@@ -62,29 +63,18 @@ function CreateUser() {
         onChange={formik.handleChange}
         value={formik.values.password}
       />
-      {/* <label htmlFor="age">Age: </label>
-      <input
-        id="age"
-        name="age"
-        type="number"
-        onChange={formik.handleChange}
-        value={formik.values.age}
-      /> */}
       {formik.errors.username && formik.touched.username && (
         <p style={{ color: "red" }}>{formik.errors.username}</p>
       )}
       {formik.errors.password && formik.touched.password && (
         <p style={{ color: "red" }}>{formik.errors.password}</p>
       )}
-      {/* {formik.errors.age && formik.touched.age && (
-        <p style={{ color: "red" }}>{formik.errors.age}</p>
-      )} */}
       {formErrors.length > 0 && (
         <p style={{ color: "red" }}>{formErrors.join(", ")}</p>
       )}
-      <button type="submit">Add User</button>
+      <button type="submit">Login</button>
     </form>
   );
 }
 
-export default CreateUser;
+export default UserLogin;
