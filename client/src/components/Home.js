@@ -1,24 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import BikeContainerHome from "./BikeContainerHome";
 
-function Home() {
-  const [bikes, setBikes] = useState([]);
-
-  function getBicycles() {
-    fetch("/bicycles")
-      .then((r) => r.json())
-      .then((bicycles) => {
-        setBikes(bicycles.slice(0, 3));
-      });
-  }
-
-  useEffect(() => {
-    getBicycles();
-  }, [bikes]);
-  
+function Home({ bikes }) {
   return (
-    <div>
-      <BikeContainerHome bikes={bikes} />
+    <div className="bg-info"> 
+      <BikeContainerHome bikes={bikes.slice(0,3)} />
     </div>
   );
 }

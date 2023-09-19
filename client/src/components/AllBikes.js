@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import BikeForm from "./BikeForm";
 import BikeContainer from "./BikeContainer";
 import { useHistory } from "react-router-dom";
@@ -28,14 +28,19 @@ function AllBikes({ bikes, setBikes }) {
   }
 
   return (
-    <div>
-      <h1>All Bicycles</h1>
+    <div className="bg-info">
+      <h1 className="bg-info text-center">All Bicycles</h1>
       {showForm ? (
         <BikeForm onAddBike={handleAddBike} setShowForm={setShowForm} />
       ) : (
         <>
-          <div className="buttonContainer">
-            <button onClick={handleClick}>Add a Bike</button>
+          <div className="buttonContainer d-flex justify-content-center">
+            <button
+              className="btn btn-success text-white"
+              onClick={handleClick}
+            >
+              Add a Bike
+            </button>
           </div>
           <BikeContainer
             bikes={bikes}

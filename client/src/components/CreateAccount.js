@@ -49,42 +49,54 @@ function CreateAccount() {
     });
   };
 
+  
   return (
-    <div>
+    <div className="container">
       <h2>Create an Account</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Name:
+          </label>
           <input
             type="text"
             name="username"
             value={formData.username}
             onChange={handleChange}
+            className="form-control"
             required
           />
         </div>
-        <div>
-          <label>Email:</label>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email:
+          </label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
+            className="form-control"
             required
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password:
+          </label>
           <input
             type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
+            className="form-control"
             required
           />
         </div>
-        <div>
-          <button type="submit">Create Account</button>
+        <div className="mb-3">
+          <button type="submit" className="btn btn-primary">
+            Create Account
+          </button>
         </div>
       </form>
     </div>

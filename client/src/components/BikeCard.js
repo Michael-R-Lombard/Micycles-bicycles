@@ -30,13 +30,16 @@ function BikeCard({ bike, onDeleteBike, onUpdateBike }) {
   return (
     <div className="container">
       <h2>{name}</h2>
-      <img src={image} alt={name} className="" style={{ maxWidth: "20rem" }} />
-      <p>{likes} Likes </p>
-      <button className="like-btn" onClick={handleLikeClick}>
-        Likes
+      <img src={image} alt={name} style={{ maxWidth: "15rem" }} />
+      <p>{likes} Likes</p>
+      <button className="btn btn-primary" onClick={handleLikeClick}>
+        Like
       </button>
-      <button className="del-btn" onClick={handleDeleteClick}>
+      <button className="btn btn-muted text-white" onClick={handleDeleteClick}>
         Donate Bicycle
+      </button>
+      <button className="btn btn-danger" onClick={handleLikeClick}>
+        Wish List
       </button>
     </div>
   );

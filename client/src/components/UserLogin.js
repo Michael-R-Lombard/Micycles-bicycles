@@ -3,9 +3,9 @@ import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 
 function UserLogin() {
+  const history = useHistory();
   const [users, setUsers] = useState([]);
   const [formErrors, setFormErrors] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     fetch("/users")
@@ -37,7 +37,7 @@ function UserLogin() {
           setUsers([...users, user]);
           formik.resetForm();
           setFormErrors([]);
-          history.push('/create_bicycle');
+          history.push('/bicycles');
         })
         .catch((error) => {
           setFormErrors([error.message]);
@@ -46,34 +46,48 @@ function UserLogin() {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="container mt-5">
-      <label htmlFor="username">Username: </label>
-      <input
-        id="username"
-        name="username"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.username}
-      />
-      <label htmlFor="password">Password: </label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        onChange={formik.handleChange}
-        value={formik.values.password}
-      />
-      {formik.errors.username && formik.touched.username && (
-        <p style={{ color: "red" }}>{formik.errors.username}</p>
-      )}
-      {formik.errors.password && formik.touched.password && (
-        <p style={{ color: "red" }}>{formik.errors.password}</p>
-      )}
-      {formErrors.length > 0 && (
-        <p style={{ color: "red" }}>{formErrors.join(", ")}</p>
-      )}
-      <button type="submit">Login</button>
-    </form>
+    <div className="container mt-5">
+      <form onSubmit={formik.handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username:
+          </label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.username}
+            className="form-control"
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password:
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            className="form-control"
+          />
+        </div>
+        {formik.errors.username && formik.touched.username && (
+          <p style={{ color: "red" }}>{formik.errors.username}</p>
+        )}
+        {formik.errors.password && formik.touched.password && (
+          <p style={{ color: "red" }}>{formik.errors.password}</p>
+        )}
+        {formErrors.length > 0 && (
+          <p style={{ color: "red" }}>{formErrors.join(", ")}</p>
+        )}
+        <button type="submit" className="btn btn-primary">
+          Login
+        </button>
+      </form>
+    </div>
   );
 }
 

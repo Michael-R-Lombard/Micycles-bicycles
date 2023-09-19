@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route, Routes } from "react-router-dom";
+import React, { useEffect, useContext } from "react";
+import { Route } from "react-router-dom";
 import AllBikes from "./components/AllBikes";
 import NavBar from "./components/NavBar";
 import BikeForm from "./components/BikeForm";
 import Home from "./components/Home";
 import UserLogin from "./components/UserLogin";
 import CreateAccount from "./components/CreateAccount";
+import { BikeContext } from "./context/bike";
 
 function App() {
-  const [bikes, setBikes] = useState([]);
+  const { bikes, setBikes } = useContext(BikeContext);
 
   function getBicycles() {
     fetch("/bicycles")
       .then((r) => r.json())
-      .then((bicycles) => setBikes(bicycles));
+      .then((bicycles) => {
+        setBikes(bicycles.slice(0, 3));
+      });
   }
 
   useEffect(() => {
@@ -26,10 +29,10 @@ function App() {
 
   return (
     <div>
+      <h1 className="bg-info text-center">Micycle's Bicycles</h1>
       <NavBar />
-      <h1>Micycle's Bicycles</h1>
       <Route exact path="/">
-        <Home />
+        <Home bikes={bikes} />
       </Route>
       <Route exact path="/bicycles">
         <AllBikes bikes={bikes} setBikes={setBikes} />
