@@ -1,9 +1,10 @@
 from flask import Flask, jsonify, make_response, request, session
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-from models import db, Bicycle, User
+from models import db, Bicycle, User, WishList
 from config import app
 from flask_cors import CORS
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -25,7 +26,6 @@ def index():
 class Bicycles(Resource):
     def get(self):
         bicycle_list = [bicycle.to_dict() for bicycle in Bicycle.query.all()]
-
         response = make_response(jsonify(bicycle_list), 200)
         return response
 
@@ -113,8 +113,6 @@ class Users(Resource):
         new_user = User()
         data = request.get_json()
 
-        print(data)
-
         try:
             for attr in data:
                 setattr(new_user, attr, data[attr])
@@ -129,6 +127,42 @@ class Users(Resource):
 
 
 api.add_resource(Users, "/create_user")
+
+
+class WishLists(Resource):
+    def post(self):
+        new_wish_list = WishList()
+        data = request.get_json()
+
+        try:
+            for attr in data:
+                setattr(new_wish_list, attr, data[attr])
+
+            db.session.add(new_wish_list)
+            db.session.commit()
+
+            return make_response(new_wish_list.to_dict(), 201)
+        except ValueError:
+            return make_response({"errors": ["Validation errors"]}, 400)
+
+
+api.add_resource(WishLists, "/wish_list")
+
+
+class WishListByUserId(Resource):
+    def get(self, user_id):
+        all_wish_lists = [item.to_dict() for item in WishList.query.all()]
+        user_wish_list = []
+
+        for item in all_wish_lists:
+            if item["user_id"] == user_id:
+                user_wish_list.append(item)
+
+        response = make_response(jsonify(user_wish_list), 200)
+        return response
+
+
+api.add_resource(WishListByUserId, "/wish_list/<int:user_id>")
 
 
 if __name__ == "__main__":
