@@ -1,10 +1,20 @@
 import React from "react";
-import BikeContainerHome from "./BikeContainerHome";
+import BikeCard from "./BikeCard";
 
-function Home({ bikes }) {
+function Home({ bikes, onDeleteBike, onUpdateBike }) {
   return (
-    <div className="bg-info"> 
-      <BikeContainerHome bikes={bikes.slice(0,3)} />
+    <div className="bg-info">
+      <div id="bike-collection">
+        {bikes.map((bike) => (
+          <BikeCard
+            key={bike.id}
+            bike={bike}
+            donate={false}
+            onDeleteBike={onDeleteBike}
+            onUpdateBike={onUpdateBike}
+          />
+        ))}
+      </div>
     </div>
   );
 }

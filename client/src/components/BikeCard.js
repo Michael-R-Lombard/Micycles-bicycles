@@ -1,6 +1,6 @@
 import React from "react";
 
-function BikeCard({ bike, onDeleteBike, onUpdateBike }) {
+function BikeCard({ bike, donate, onDeleteBike, onUpdateBike }) {
   const { id, name, image, likes } = bike;
 
   function handleDeleteClick() {
@@ -35,9 +35,17 @@ function BikeCard({ bike, onDeleteBike, onUpdateBike }) {
       <button className="btn btn-primary" onClick={handleLikeClick}>
         Like
       </button>
-      <button className="btn btn-muted text-white" onClick={handleDeleteClick}>
-        Donate Bicycle
-      </button>
+      {donate ? (
+        <button
+          className="btn btn-muted text-white"
+          onClick={handleDeleteClick}
+        >
+          Donate Bicycle
+        </button>
+      ) : (
+        <></>
+      )}
+
       <button className="btn btn-danger" onClick={handleLikeClick}>
         Wish List
       </button>

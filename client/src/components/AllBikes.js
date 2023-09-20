@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import BikeForm from "./BikeForm";
-import BikeContainer from "./BikeContainer";
+import BikeCard from "./BikeCard";
 import { useHistory } from "react-router-dom";
 
 function AllBikes({ bikes, setBikes }) {
@@ -42,11 +42,15 @@ function AllBikes({ bikes, setBikes }) {
               Add a Bike
             </button>
           </div>
-          <BikeContainer
-            bikes={bikes}
-            onDeleteBike={handleDeleteBike}
-            onUpdateBike={handleUpdateBike}
-          />
+          {bikes.map((bike) => (
+            <BikeCard
+              key={bike.id}
+              bike={bike}
+              donate={true}
+              onDeleteBike={handleDeleteBike}
+              onUpdateBike={handleUpdateBike}
+            />
+          ))}
         </>
       )}
     </div>

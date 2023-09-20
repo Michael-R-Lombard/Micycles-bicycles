@@ -15,13 +15,13 @@ function App() {
     fetch("/bicycles")
       .then((r) => r.json())
       .then((bicycles) => {
-        setBikes(bicycles.slice(0, 3));
+        setBikes(bicycles);
       });
   }
 
   useEffect(() => {
     getBicycles();
-  }, [bikes]);
+  }, []);
 
   function handleAddBike(newBike) {
     setBikes([...bikes, newBike]);
