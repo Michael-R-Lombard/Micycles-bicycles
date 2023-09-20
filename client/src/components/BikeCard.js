@@ -27,6 +27,10 @@ function BikeCard({ bike, donate, onDeleteBike, onUpdateBike }) {
       .then(onUpdateBike);
   }
 
+  function handleWishListClick() {
+    return null
+  }
+
   return (
     <div className="container">
       <h2>{name}</h2>
@@ -46,7 +50,7 @@ function BikeCard({ bike, donate, onDeleteBike, onUpdateBike }) {
         <></>
       )}
 
-      <button className="btn btn-danger" onClick={handleLikeClick}>
+      <button className="btn btn-danger" onClick={handleWishListClick}>
         Wish List
       </button>
     </div>
