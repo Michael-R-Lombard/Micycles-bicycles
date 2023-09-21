@@ -3,7 +3,7 @@ import BikeForm from "./BikeForm";
 import BikeCard from "./BikeCard";
 import { useHistory } from "react-router-dom";
 
-function AllBikes({ bikes, setBikes }) {
+function AllBikes({ bikes, onAddBike, onDeleteBike, onUpdateBike }) {
   const history = useHistory();
   const [showForm, setShowForm] = useState(false);
 
@@ -11,27 +11,11 @@ function AllBikes({ bikes, setBikes }) {
     history.push("/create_bicycle");
   }
 
-  function handleAddBike(newBike) {
-    setBikes([...bikes, newBike]);
-  }
-
-  function handleDeleteBike(bikeId) {
-    const updatedBikes = bikes.filter((bike) => bike.id !== bikeId);
-    setBikes(updatedBikes);
-  }
-
-  function handleUpdateBike(updatedBike) {
-    const updatedBikes = bikes.map((bike) =>
-      bike.id === updatedBike.id ? updatedBike : bike
-    );
-    setBikes(updatedBikes);
-  }
-
   return (
     <div className="bg-info">
       <h1 className="bg-info text-center">All Bicycles</h1>
       {showForm ? (
-        <BikeForm onAddBike={handleAddBike} setShowForm={setShowForm} />
+        <BikeForm onAddBike={onAddBike} setShowForm={setShowForm} />
       ) : (
         <>
           <div className="buttonContainer d-flex justify-content-center">
@@ -47,8 +31,8 @@ function AllBikes({ bikes, setBikes }) {
               key={bike.id}
               bike={bike}
               donate={true}
-              onDeleteBike={handleDeleteBike}
-              onUpdateBike={handleUpdateBike}
+              onDeleteBike={onDeleteBike}
+              onUpdateBike={onUpdateBike}
             />
           ))}
         </>

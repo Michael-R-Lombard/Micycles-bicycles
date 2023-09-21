@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 
@@ -6,12 +6,6 @@ function UserLogin() {
   const history = useHistory();
   const [users, setUsers] = useState([]);
   const [formErrors, setFormErrors] = useState([]);
-
-  useEffect(() => {
-    fetch("/users")
-      .then((r) => r.json())
-      .then(setUsers);
-  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -37,7 +31,8 @@ function UserLogin() {
           setUsers([...users, user]);
           formik.resetForm();
           setFormErrors([]);
-          history.push('/bicycles');
+          window.localStorage.setItem("userId", user.id);
+          history.push("/bicycles");
         })
         .catch((error) => {
           setFormErrors([error.message]);

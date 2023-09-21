@@ -19,11 +19,11 @@ function NavBar() {
           <li className="nav-item"> 
             <NavLink className="nav-link text-danger" to="/create_bicycle"> Create Bicycle </NavLink> 
           </li>
-          {/* <li className="nav-item"> 
-            <NavLink className="nav-link text-success" to="/create_user"> Create Account </NavLink> 
-          </li> */}
           <li className="nav-item"> 
             <NavLink className="nav-link text-danger" to="/bicycles"> See All Bicycles </NavLink> 
+          </li>
+          <li className="nav-item"> 
+            <NavLink className="nav-link text-success" to="/wish_list"> Wish List </NavLink> 
           </li>
         </ul>
       </nav>
@@ -32,10 +32,3 @@ function NavBar() {
 }
 
 export default NavBar;
-
-
-
-
-
-
-

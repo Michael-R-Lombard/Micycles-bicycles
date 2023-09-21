@@ -85,17 +85,12 @@ api.add_resource(BicycleByID, "/bicycles/<int:id>")
 
 
 class Login(Resource):
-    def get(self):
-        users = [user.to_dict() for user in User.query.all()]
-        return make_response(users, 200)
-
     def post(self):
         username = request.get_json()["username"]
         password = request.get_json()["password"]
         user = User.query.filter(User.username == username).first()
 
         if password == user.password:
-            session["user_id"] = user.id
             return user.to_dict(), 200
 
         return {"error": "Invalid username or password"}, 401

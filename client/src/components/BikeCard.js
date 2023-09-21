@@ -2,6 +2,7 @@ import React from "react";
 
 function BikeCard({ bike, donate, onDeleteBike, onUpdateBike }) {
   const { id, name, image, likes } = bike;
+  const userId = window.localStorage.getItem("userId");
 
   function handleDeleteClick() {
     fetch(`/bicycles/${id}`, {
@@ -27,8 +28,23 @@ function BikeCard({ bike, donate, onDeleteBike, onUpdateBike }) {
       .then(onUpdateBike);
   }
 
-  function handleWishListClick() {
-    return null
+  function handleWishListClick(event) {
+    event.preventDefault();
+
+    const newWishListItem = {
+      user_id: userId,
+      bicycle_id: id
+    };
+
+    fetch("/wish_list", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newWishListItem),
+    })
+      .then((r) => r.json())
+      .catch(err => console.log(err))
   }
 
   return (
